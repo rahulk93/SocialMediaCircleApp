@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="SocialMediaCircleApp.Data/SocialMediaCircleApp.Data.csproj" Id="b687f5b4-73ec-4290-af58-1416a9f54758" />
   <Project Path="SocialMediaCircleApp/SocialMediaCircleApp.csproj" />
 </Solution>
