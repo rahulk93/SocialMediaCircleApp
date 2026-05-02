@@ -16,8 +16,8 @@ namespace SocialMediaCircleApp.Data.Helpers
             {
                 var newUser = new User()
                 {
-                    FullName = "Ervis Trupja",
-                    ProfilePictureUrl = "https://img-b.udemycdn.com/user/200_H/16004620_10db_5.jpg"
+                    FullName = "Rahul Khatri",
+                    ProfilePictureUrl = "https://i.postimg.cc/VLhv3468/me-jpg.jpg"
                 };
                 await appDbContext.Users.AddAsync(newUser);
                 await appDbContext.SaveChangesAsync();
