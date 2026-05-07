@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SocialMediaCircleApp.Data;
 using SocialMediaCircleApp.Data.Helpers;
+using SocialMediaCircleApp.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,12 @@ builder.Services.AddControllersWithViews();
 //Database Configuration
 var dbConnectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
+
+//Services configuration
+builder.Services.AddScoped<IPostsService, PostsService>();
+builder.Services.AddScoped<IHashtagsService, HashtagsService>();
+builder.Services.AddScoped<IStoriesService, StoriesService>();
+builder.Services.AddScoped<IFilesService, FilesService>();
 
 var app = builder.Build();
 
