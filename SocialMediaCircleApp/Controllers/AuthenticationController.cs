@@ -1,10 +1,11 @@
-﻿using SocialMediaCircleApp.Data.Helpers.Constants;
-using SocialMediaCircleApp.Data.Models;
-using SocialMediaCircleApp.ViewModels.Authentication;
-using SocialMediaCircleApp.ViewModels.Settings;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SocialMediaCircleApp.Data.Helpers.Constants;
+using SocialMediaCircleApp.Data.Models;
+using SocialMediaCircleApp.ViewModels.Authentication;
+using SocialMediaCircleApp.ViewModels.Settings;
 using System.Security.Claims;
 
 namespace SocialMediaCircleApp.Controllers
@@ -147,6 +148,46 @@ namespace SocialMediaCircleApp.Controllers
 
             await _signInManager.RefreshSignInAsync(loggedInUser);
             return RedirectToAction("Index", "Settings");
+        }
+
+        public IActionResult ExternalLogin(string provider)
+        {
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Authentication");
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        public async Task<IActionResult> ExternalLoginCallback()
+        {
+            var info = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+            if (info == null)
+                return RedirectToAction("Login");
+
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                var newUser = new User()
+                {
+                    Email = email,
+                    UserName = email,
+                    FullName = info.Principal.FindFirstValue(ClaimTypes.Name),
+                    EmailConfirmed = true
+                };
+                var result = await _userManager.CreateAsync(newUser);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(newUser, AppRoles.User);
+                    await _userManager.AddClaimAsync(newUser, new Claim(CustomClaim.FullName, newUser.FullName));
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
+
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize]
