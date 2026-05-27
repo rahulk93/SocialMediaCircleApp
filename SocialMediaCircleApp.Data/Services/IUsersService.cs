@@ -10,5 +10,6 @@ namespace SocialMediaCircleApp.Data.Services
     {
         Task<User> GetUser(int loggedInUserId);
         Task UpdateUserProfilePicture(int loggedInUserId, string profilePictureUrl);
+        Task<List<Post>> GetUserPosts(int userId);
     }
 }
