@@ -13,6 +13,12 @@ namespace SocialMediaCircleApp.Controllers.Base
             return int.Parse(loggedInUserId);
         }
 
+        protected string? GetUserFullName()
+        {
+            var loggedInUserFullName = User.FindFirstValue(ClaimTypes.Name);
+            return loggedInUserFullName;
+        }
+
         protected IActionResult RedirectToLogin()
         {
             return RedirectToAction("Login", "Authentication");
