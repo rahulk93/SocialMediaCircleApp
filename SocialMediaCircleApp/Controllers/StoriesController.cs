@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialMediaCircleApp.Data.Helpers.Constants;
 using SocialMediaCircleApp.Controllers.Base;
 using SocialMediaCircleApp.Data.Models;
 using SocialMediaCircleApp.Data.Services;
@@ -9,7 +10,7 @@ using SocialMediaCircleApp.Data.Helpers.Enums;
 
 namespace SocialMediaCircleApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = AppRoles.User)]
     public class StoriesController : BaseController
     {
         private readonly IStoriesService _storiesService;

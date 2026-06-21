@@ -3,9 +3,11 @@ using SocialMediaCircleApp.Controllers.Base;
 using SocialMediaCircleApp.Data.Helpers.Constants;
 using SocialMediaCircleApp.Data.Services;
 using SocialMediaCircleApp.ViewModels.Friends;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SocialMediaCircleApp.Controllers
 {
+    [Authorize(Roles = AppRoles.User)]
     public class FriendsController : BaseController
     {
         private readonly IFriendsService _friendsService;

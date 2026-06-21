@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialMediaCircleApp.Data.Helpers.Constants;
 using SocialMediaCircleApp.Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using SocialMediaCircleApp.Controllers.Base;
 using SocialMediaCircleApp.Data.Models;
 
 namespace SocialMediaCircleApp.Controllers
 {
+    [Authorize(Roles = AppRoles.User)]
     public class NotificationsController : BaseController
     {
         private readonly INotificationsService _notificationsService;
@@ -34,7 +37,7 @@ namespace SocialMediaCircleApp.Controllers
             if (!userId.HasValue) RedirectToLogin();
 
             var notifications = await _notificationsService.GetNotifications(userId.Value);
-            return PartialView("Notifications/_Notifications", notifications);
+            return PartialView("~/Views/Shared/Notifications/_Notifications.cshtml", notifications);
         }
 
         [HttpPost]
@@ -46,7 +49,7 @@ namespace SocialMediaCircleApp.Controllers
             await _notificationsService.SetNotificationAsReadAsync(notificationId);
 
             var notifications = await _notificationsService.GetNotifications(userId.Value);
-            return PartialView("Notifications/_Notifications", notifications);
+            return PartialView("~/Views/Shared/Notifications/_Notifications.cshtml", notifications);
         }
     }
 }
