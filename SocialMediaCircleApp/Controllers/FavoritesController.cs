@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using SocialMediaCircleApp.Data.Helpers.Constants;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using SocialMediaCircleApp.Data.Services;
 using System.Security.Claims;
 
 namespace SocialMediaCircleApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = AppRoles.User)]
     public class FavoritesController : Controller
     {
         private readonly IPostsService _postsService;

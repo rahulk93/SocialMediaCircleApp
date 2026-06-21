@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialMediaCircleApp.Data.Helpers.Constants;
 using SocialMediaCircleApp.Controllers.Base;
 using SocialMediaCircleApp.Data.Services;
 using SocialMediaCircleApp.ViewModels.Settings;
@@ -9,7 +10,7 @@ using System.Security.Claims;
 
 namespace SocialMediaCircleApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = $"{AppRoles.User},{AppRoles.Admin}")]
     public class SettingsController : BaseController
     {
         private readonly IUsersService _usersService;

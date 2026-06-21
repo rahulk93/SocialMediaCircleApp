@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialMediaCircleApp.Data.Helpers.Constants;
 using SocialMediaCircleApp.Controllers.Base;
 using SocialMediaCircleApp.Data.Services;
 using SocialMediaCircleApp.Data.Models;
 using SocialMediaCircleApp.ViewModels.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace SocialMediaCircleApp.Controllers
 {
+    [Authorize(Roles = AppRoles.User)]
     public class UsersController : BaseController
     {
         private readonly IUsersService _userService;
