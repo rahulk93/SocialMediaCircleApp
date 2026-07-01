@@ -14,11 +14,7 @@ builder.Services.AddControllersWithViews();
 
 //Database Configuration
 var dbConnectionString = builder.Configuration.GetConnectionString("Default");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString,
-        sqlOptions => sqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 5,
-            maxRetryDelay: TimeSpan.FromSeconds(10),
-            errorNumbersToAdd: null)));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
 
 var blobConnectionString = builder.Configuration["AzureStorageConnectionString"];
 
